@@ -18,7 +18,7 @@ import colors from './config/colors';
 import animStyles from './styles/anim.module.css';
 import './styles/animations.css';
 import tut_styles from './styles/tut_styles';
-import {puzzTitle, puzzDescription,  puzzles} from './data/dailyDataHelper';//numPuzzles,
+import {puzzTitle, puzzDescription,  puzzles} from './data/dailyDataHelper';
 import { getRandom, getRandomInt, shuffleArray, transposeArray, allElementsEqual, printWordsToConsole, getOffsetColor } from './config/functions';//printGameArrayToConsole
 import gamePlatitudes from "./data/game_plats";
 import playRavlStr from "./data/PlayRavlStr";
@@ -155,7 +155,7 @@ class App extends Component {
       showedTutScreen1: false,
       showedTutScreen2: true,
       showTutScreen1: true,
-      showTutScreen2: false,
+      showTutScreen2: true,
       gameStarted: false,
       gameDone: false,
       clearedLevel: true,
@@ -277,6 +277,8 @@ class App extends Component {
     dateToday = formatDate(new Date(), "MM-dd-yyyy");
     title = puzzTitle(dateToday);
     description = puzzDescription(dateToday);
+    console.log(description);
+
     dailyPuzzlesArr = puzzles(dateToday);
     if(isPC){
       window.addEventListener("resize", this.updateHeightAndWidth);
@@ -287,18 +289,6 @@ class App extends Component {
       lettersetContainerWidth: this.lettersetContainer.current.getBoundingClientRect().width,
       scoreContainerHeight: this.scoreContainer.current.getBoundingClientRect().height,
     });
-    const showed = window.localStorage.getItem(KEY_ShowedTutorial);
-    if (showed !== null) {
-      const showedBool = (showed === 'true') ? true : false;
-      this.setState({ showedTutScreen1: showedBool, showTutScreen1: !showedBool });
-    } else {
-      try {
-        window.localStorage.setItem(KEY_ShowedTutorial, 'false');
-        this.setState({ showedTutScreen1: false });
-      } catch (error) {
-        window.alert('window.localStorage error: ' + error.message);
-      }
-    }
     const emp = window.localStorage.getItem(KEY_EasyModePref);
     if (emp !== null) {
       const empBool = (emp === 'true')?true:false;
@@ -1433,7 +1423,6 @@ class App extends Component {
         const element = document.querySelector('.anim-node');
         element.classList.add('animate__animated', whichAnimation);
       }, 100);
-
       switch (this.state.solvedWords[this.state.currentGameIndex].length - this.state.swOffset) {
         case 0:
           this.sendRowOut(hasPuzzleWordArr[2], hasPuzzleWordArr[1]);
@@ -1757,7 +1746,7 @@ class App extends Component {
             if (this.state.isDailyGame) {
               switch (this.state.currentGameIndex) {
                 case 8:
-                  if (puzzleWords8.includes(tempWord)) legitWord = true;
+                  if (puzzleWords8.includes(tempWord) || (this.state.megaPuzzle && this.state.megaWords.includes(tempWord))) legitWord = true;
                   break;
                 case 9:
                   if (puzzleWords9.includes(tempWord)) legitWord = true;
@@ -2737,10 +2726,10 @@ console.log("starColorArray: " + JSON.stringify(this.state.starColorArray));
             <div style={this.styles().appContainer}>
               <div 
                 id="appLeftBox"
-                style={{ ...this.styles().adBox, width: this.state.widthLeftOrRight, backgroundColor: darkModeEnabled ? colors.gray_4 : colors.off_white, borderRightColor: colors.off_black, left: 0 }}
+                style={{ ...this.styles().adBox, backgroundColor: colors.gray_3, width: this.state.widthLeftOrRight, borderRightColor: colors.off_black, left: 0 }}
               />
 
-              <div style={{ ...this.styles().adBox, width:  this.state.widthLeftOrRight, backgroundColor: darkModeEnabled ? colors.gray_4 : colors.off_white, borderLeftColor: colors.off_black, right: 0 }} />
+              <div style={{ ...this.styles().adBox, backgroundColor: colors.gray_3, width:  this.state.widthLeftOrRight, borderLeftColor: colors.off_black, right: 0 }} />
               <div style={{ ...this.styles().messageOuterContainer, borderColor: global.bgColor }}>
                 <div style={this.styles().messageContainer}>
                   <div style={{ ...this.styles().header_text, color: this.state.dailyPuzzleCompleted && this.state.currentGameIndex === -1 ? colors.gray_2 : colors.text_white }}>

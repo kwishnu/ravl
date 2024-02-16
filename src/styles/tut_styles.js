@@ -45,7 +45,7 @@ tut_dialog2: {
   justifyContent: 'center',
   position: "absolute",
   top: scrHeight * 0.35,
-  left: pc?0:tablet?0:scrWidth * 0.1,
+  left: pc?20:tablet?20:scrWidth * 0.1,
   width: scrHeight * 0.25,
   height: "auto",
   backgroundColor: colors.text_white,
