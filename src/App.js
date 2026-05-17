@@ -154,7 +154,7 @@ class App extends Component {
       showGame10: false,
       showedTutScreen1: false,
       showedTutScreen2: true,
-      showTutScreen1: true,
+      showTutScreen1: false,
       showTutScreen2: true,
       gameStarted: false,
       gameDone: false,
@@ -683,7 +683,7 @@ class App extends Component {
     } else {
       try {
         window.localStorage.setItem(KEY_ShowedTutorial, 'false');
-        this.setState({ showedTutScreen1: false });
+        this.setState({ showedTutScreen1: false, showTutScreen1: true });
       } catch (error) {
         window.alert('window.localStorage error: ' + error.message);
       }
